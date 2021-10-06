@@ -1,13 +1,13 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-// import { Navbar } from './app/Navbar';
-import { PostsList, AddPostForm } from './features';
+import Navbar from './app/Navbar';
+import { PostsList, AddPostForm , SinglePostPage} from './features';
 
 function App() {
   return (
     <Router>
-      {/* <Navbar /> */}
+      <Navbar />
       <div className='App'>
         <Switch>
           <Route
@@ -20,6 +20,8 @@ function App() {
               </React.Fragment>
             }
           />
+          <Route exact path='/posts/:postId' component={SinglePostPage} />
+          <Route exact path='/editPost/:postId' render={props => <AddPostForm edit {...props} />} />
           <Redirect to='/' />
         </Switch>
       </div>
