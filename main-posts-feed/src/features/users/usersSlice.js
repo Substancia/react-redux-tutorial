@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = [
-  { id: 0, name: 'Sentienta' },
-  { id: 1, name: 'Arlandria' },
-  { id: 2, name: 'Substancia' }
+  { id: 1, name: 'Sentienta' },
+  { id: 2, name: 'Arlandria' },
+  { id: 3, name: 'Substancia' }
 ];
 
 const usersSlice = createSlice({

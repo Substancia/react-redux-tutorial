@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { TimeAgo } from "..";
+import { ReactionButtons, TimeAgo } from "..";
 
 const SinglePostPage = ({ match }) => {
   const post = useSelector(state =>
@@ -27,6 +27,7 @@ const SinglePostPage = ({ match }) => {
         <h4>{author !== null ? author.name : null}</h4>
         <TimeAgo timestamp={post.date} />
         <p>{post.content}</p>
+        <ReactionButtons post={post} />
         <Link to={`/editPost/${post.id}`}>Edit Post</Link>
         <Link to='/'>Back</Link>
       </article>
