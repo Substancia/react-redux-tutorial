@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const PostsList = () => {
-  const posts = useSelector(state => state.posts);
+  const posts = useSelector(state => state.posts).slice()
+    .sort((a, b) => b.date.localeCompare(a.date));
   
   const renderedPosts = posts.map(post =>
     <article key={post.id}>
