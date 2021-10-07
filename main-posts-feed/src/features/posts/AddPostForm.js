@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { nanoid } from "@reduxjs/toolkit";
 import { postAdded, postUpdated } from "./postsSlice";
 import { useHistory } from "react-router";
 
@@ -22,9 +21,7 @@ const AddPostForm = props => {
           postUpdated({ id: props.match.params.postId, title, content })
         );
       } else {
-        dispatch(
-          postAdded({ id: nanoid, title, content })
-        );
+        dispatch(postAdded(title, content));
       }
 
       setTitle('');
