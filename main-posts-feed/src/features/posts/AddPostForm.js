@@ -11,24 +11,32 @@ const AddPostForm = props => {
 
   const [title, setTitle] = useState((post && post.title) ? post.title : '');
   const [content, setContent] = useState((post && post.content) ? post.content : '');
+  const [userId, setUserId] = useState('');
   const dispatch = useDispatch();
   const history = useHistory();
+  const users = useSelector(state => state.users);
 
   const onSavePostClicked = () => {
-    if(title && content) {
-      if(props.edit) {
-        dispatch(
-          postUpdated({ id: props.match.params.postId, title, content })
-        );
-      } else {
-        dispatch(postAdded(title, content));
-      }
-
-      setTitle('');
-      setContent('');
+    if(props.edit) {
+      dispatch(
+        postUpdated({ id: props.match.params.postId, title, content })
+      );
       history.push(`/posts/${props.match.params.postId}`)
+    } else {
+      dispatch(postAdded(title, content, userId));
     }
+
+    setTitle('');
+    setContent('');
   }
+
+  const canSave = Boolean(title) && Boolean(content) && Boolean(userId);
+
+  const usersOptions = users.map(user =>
+    <option key={user.id} value={user.id}>
+      {user.name}
+    </option>
+  );
 
   return (
     <section>
@@ -46,6 +54,15 @@ const AddPostForm = props => {
           value={title}
           onChange={e => setTitle(e.target.value)}
         />
+        <label htmlFor='postAuthor'>Author:</label>
+        <select
+          id='postAuthor'
+          value={userId}
+          onChange={e => setUserId(Number(e.target.value))}
+        >
+          <option value=''></option>
+          {usersOptions}
+        </select>
         <label htmlFor='postContent'>Content:</label>
         <input
           type='text'
@@ -54,7 +71,7 @@ const AddPostForm = props => {
           value={content}
           onChange={e => setContent(e.target.value)}
         />
-        <button type='button' onClick={onSavePostClicked}>Save Post</button>
+        <button type='button' onClick={onSavePostClicked} disabled={!canSave}>Save Post</button>
       </form>
     </section>
   );

@@ -13,9 +13,9 @@ const postsSlice = createSlice({
       reducer(state, action) {
         state.push(action.payload)
       },
-      prepare(title, content) {
+      prepare(title, content, userId) {
         return {
-          payload: { id: nanoid(), title, content }
+          payload: { id: nanoid(), title, content, user: userId }
         }
       }
     },
@@ -30,5 +30,7 @@ const postsSlice = createSlice({
 });
 
 export const { postAdded, postUpdated } = postsSlice.actions;
+
+export const getLatestPostId = state => state.posts[state.posts.length - 1].id;
 
 export default postsSlice.reducer;

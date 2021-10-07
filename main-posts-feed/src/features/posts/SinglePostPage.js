@@ -7,6 +7,11 @@ const SinglePostPage = ({ match }) => {
     state.posts.find(post => post.id === match.params.postId)
   );
 
+  const author = useSelector(state => ('user' in post) ?
+    state.users.find(user => user.id === post.user) :
+    null
+  );
+
   if(!post) return (
     <section>
       <h2>Post not found!</h2>
@@ -18,6 +23,7 @@ const SinglePostPage = ({ match }) => {
     <section>
       <article>
         <h2>{post.title}</h2>
+        <h4>{author !== null ? author.name : null}</h4>
         <p>{post.content}</p>
         <Link to={`/editPost/${post.id}`}>Edit Post</Link>
         <Link to='/'>Back</Link>
