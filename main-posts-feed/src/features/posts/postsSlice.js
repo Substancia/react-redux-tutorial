@@ -31,14 +31,14 @@ const postsSlice = createSlice({
         }
       }
     },
-    postUpdated(state, action) {
+    postUpdated: (state, action) => {
       const existingPost = state.find(post => post.id === action.payload.id);
       if(existingPost) {
         existingPost.title = action.payload.title;
         existingPost.content = action.payload.content;
       }
     },
-    reactionAdded(state, action) {
+    reactionAdded: (state, action) => {
       const existingPost = state.find(post => post.id === action.payload.id);
       if(existingPost) {
         existingPost.reactions[action.payload.reaction]++;
