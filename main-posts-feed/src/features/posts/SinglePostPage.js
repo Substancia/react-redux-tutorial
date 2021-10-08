@@ -2,11 +2,10 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { ReactionButtons, TimeAgo } from "..";
+import { selectPostById } from "./postsSlice";
 
 const SinglePostPage = ({ match }) => {
-  const post = useSelector(state =>
-    state.posts.find(post => post.id === match.params.postId)
-  );
+  const post = useSelector(state => selectPostById(state, match.params.postId));
 
   const author = useSelector(state => ('user' in post) ?
     state.users.find(user => user.id === post.user) :

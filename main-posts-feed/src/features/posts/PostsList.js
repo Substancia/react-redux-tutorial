@@ -1,9 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { selectAllPosts } from './postsSlice';
 
 const PostsList = () => {
-  const posts = useSelector(state => state.posts).slice()
+  const posts = useSelector(selectAllPosts).slice()
     .sort((a, b) => b.date.localeCompare(a.date));
   
   const renderedPosts = posts.map(post =>

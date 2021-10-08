@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postAdded, postUpdated } from "./postsSlice";
+import { postAdded, postUpdated, selectPostById } from "./postsSlice";
 import { useHistory } from "react-router";
 
 const AddPostForm = props => {
   const post = useSelector(state => props.edit ?
-    state.posts.find(post => post.id === props.match.params.postId) :
+    selectPostById(state, props.match.params.postId) :
     null
   );
 
@@ -30,7 +30,7 @@ const AddPostForm = props => {
     setContent('');
   }
 
-  const canSave = Boolean(title) && Boolean(content) && Boolean(userId);
+  const canSave = Boolean(title) && Boolean(content) && (Boolean(userId) || props.edit);
 
   const usersOptions = users.map(user =>
     <option key={user.id} value={user.id}>
@@ -59,6 +59,7 @@ const AddPostForm = props => {
           id='postAuthor'
           value={userId}
           onChange={e => setUserId(Number(e.target.value))}
+          disabled={props.edit}
         >
           <option value=''></option>
           {usersOptions}
